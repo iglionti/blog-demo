@@ -1,0 +1,56 @@
+<%= form_for(message) do |f| %>
+  <% if message.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(message.errors.count, "error") %> prohibited this message from being saved:</h2>
+
+      <ul>
+      <% message.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </div>
+    <div class="field">
+    <%= f.label :category %><br />
+    <%= f.collection_select :category_id, categories, :id, :name, :include_blank => true %>
+  </div>
+      <div class="field">
+      <div id="sub_category_id_container">
+        <%= f.label :sub_category %><br />
+        <%= f.collection_select :sub_category_id, message_category_sub_categories, :id, :name, :include_blank => true %>
+      </div>
+  </div>
+  <div class="field">
+    <%= f.label :content %><br />
+    <%= f.text_area :content %>
+  </div>
+   <div class="field">
+    <%= f.label :author_id %><br />
+    <%= f.collection_select :author_id, authors, :id, :name, :include_blank => true %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  <% end %>
+ 
+<%= content_for :javascripts do %>
+  <% javascript_tag do %>
+    $("#message_category_id").change(
+      function()
+      {
+        $.get("/categories/sub_categories?id=" + $(this).val(), 
+          function(data)
+          {
+            $("#sub_category_id_container").html(data);
+          }
+        );
+      }
+    );
+  <% end %>
+<% end %>

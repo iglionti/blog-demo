@@ -1,0 +1,37 @@
+<%= form_for(author, :html => { :multipart => true } ) do |f| %>
+  <% if author.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h2>
+
+      <ul>
+      <% author.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :email %><br />
+    <%= f.text_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :phone %><br />
+    <%= f.text_field :phone %>
+  </div>
+  <div>
+   <%= image_tag author.image.url(:medium) if author.image %>
+  </div>
+  <div>  
+  <%= f.label :image %>
+  <%= f.file_field :image %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

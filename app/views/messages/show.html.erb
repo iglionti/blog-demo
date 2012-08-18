@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= message.title %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= message.content %>
+</p>
+<p>
+  <b>Author:</b>
+  <%= message.author_name rescue nil %>
+</p>
+<p>
+  <b>Category:</b>
+  <%= message.category_name rescue nil %>
+</p>
+ <b>SubCategory:</b>
+  <%= message.sub_category_name rescue nil %>
+</p>
+
+
+<%= link_to 'Edit', edit_message_path(message) %> |
+<%= link_to 'Back', messages_path %>

@@ -1,0 +1,20 @@
+<h1>Listing categories</h1>
+<%= form_for :search, :url => categories_path, :html => {:method => :get} do %>
+  <%= text_field_tag :query, params[:query] %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <%= render categories %>
+</table>
+
+<br />
+
+<%= link_to 'New Category', new_category_path %>

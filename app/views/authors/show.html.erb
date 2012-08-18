@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= author.name %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= author.email %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= author.phone %>
+</p>
+<p>
+  <b>Avatar:</b>
+  <%= image_tag author.image.url(:medium) if author.image %>
+</p>
+
+
+<%= link_to 'Edit', edit_author_path(author) %> |
+<%= link_to 'Back', authors_path %>

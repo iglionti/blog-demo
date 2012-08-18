@@ -1,0 +1,64 @@
+<h1>Listing messages</h1>
+<% #Buscador %>
+<%= form_for :search, :url => messages_path, :html => {:method => :get} do %>
+  <%= text_field :message, :query, :value => message_query %>
+  <%= select :message, :author_id, options_from_collection_for_select(authors, :id, :name, message_author_id), :include_blank => true %>
+    <span id="category_id_container">
+      <%= select :message, :category_id, options_from_collection_for_select(message_author_categories, :id, :name, message_category_id), :include_blank => true %>
+    </span>
+   
+    <span id="sub_category_id_container">
+      <%= select :message, :sub_category_id, options_from_collection_for_select(sub_categories, :id, :name, message_sub_category_id), :include_blank => true %>
+    </span	>
+     
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+<table>
+  <tr>
+    <th>Author</th>
+    <th>Category</th>
+    <th>Sub Category</th>
+    <th>Title</th>
+    <th>Content</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <%= render messages %>
+</table>
+<%= will_paginate messages %>
+<br />
+
+<%= link_to 'New Message', new_message_path %>
+
+<%= content_for :javascripts do %>
+  <% javascript_tag do %>
+    $("#message_category_id").live("change",
+      function()
+      {
+        $.get("/categories/sub_categories?id=" + $(this).val() + "&author_id=" + $("#message_author_id").val(), 
+          function(data)
+          {
+            $("#sub_category_id_container").html(data);
+          }
+        );
+      }
+    );
+  <% end %>
+<% end %>
+<%= content_for :javascripts do %>
+  <% javascript_tag do %>
+    $("#message_author_id").live("change",
+      function()
+      {
+        $.get("/authors/categories/?id=" + $(this).val(), 
+          function(data)
+          {
+            $("#category_id_container").html(data);
+            $("#message_category_id").change();
+          }
+        );
+      }
+    );
+  <% end %>
+<% end %>

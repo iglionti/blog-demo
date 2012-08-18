@@ -1,0 +1,21 @@
+<h1>Listing authors</h1>
+<%= form_for :search, :url => authors_path, :html => {:method => :get} do %>
+  <%= text_field_tag :query, params[:query] %>
+  <%= submit_tag "Search", :name => nil %>
+<% end %>
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Messages</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+  <%= render authors %>
+</table>
+<%= will_paginate authors %>
+<br />
+
+<%= link_to 'New Author', new_author_path %>
